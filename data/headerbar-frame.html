@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-size: smaller;
+      }
+      #header-input {
+        width: 200px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <label for="header-input">Headers:</label>
+    <input type="text" id="header-input" placeholder="Header-Name: Value"/>
+    <script type="text/javascript">
+    var headerInput = window.document.getElementById('header-input');
+    headerInput.onkeypress = function(event) {
+      if(event.keyCode == 13) {
+        window.parent.postMessage({
+          action: 'addingHeader',
+          spec: headerInput.value
+        }, '*');
+      }
+    }
+
+    function removing(event) {
+      window.parent.postMessage({
+        action: 'removingHeader',
+        id: event.target.id
+      }, '*');
+    }
+
+    function helem(header) {
+      var elem = document.createElement('button');
+      elem.setAttribute('id', '' + header.id);
+      elem.innerHTML = '[X] ' + header.name + ': ' + header.value;
+      elem.onclick = removing;
+      return elem;
+    }
+
+    window.addEventListener('message', function(event) {
+      if(event.data.action == 'addHeader') {
+        var header = event.data.header;
+        document.body.insertBefore(helem(header), headerInput);
+      } else if(event.data.action == 'removeHeader') {
+        var id = event.data.id;
+        var btn = document.getElementById(id);
+        btn.parentElement.removeChild(btn);
+      }
+    });
+    </script>
+  </body>
+</html>

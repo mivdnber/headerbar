@@ -1,0 +1,9 @@
+{
+  "name": "headerbar",
+  "title": "Header Bar",
+  "id": "jid1-coo3TBBEIDJpTQ",
+  "description": "A simple toolbar that allows you to add or override request headers",
+  "author": "Michiel Van den Berghe",
+  "license": "Unlicense (http://unlicense.org)",
+  "version": "1.0"
+}
